@@ -1,11 +1,11 @@
 
 resource "azurerm_resource_group" "example" {
-  name     = "stage-website-rg"
+  name     = "prod-website-rg"
   location = var.resource_group_location
 }
 
 resource "azurerm_service_plan" "example" {
-  name                = "stage-website-plan"
+  name                = "prod-website-plan"
   resource_group_name = azurerm_resource_group.example.name
   location            = var.resource_group_location
   os_type             = "Linux"
@@ -13,7 +13,7 @@ resource "azurerm_service_plan" "example" {
 }
 
 resource "azurerm_linux_web_app" "example" {
-  name                = "stage-website"
+  name                = "prod-website"
   resource_group_name = azurerm_resource_group.example.name
   location            = var.resource_group_location
   service_plan_id     = azurerm_service_plan.example.id
