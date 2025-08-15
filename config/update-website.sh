@@ -15,8 +15,17 @@ fi
 cd ..
 
 # Zip the website files
+echo "Zipping website files..."
 zip website.zip index.html styles.css app.js
 
+# Deploy the zipped website to Azure App Service
+echo "Deploying website to Azure App Service..."
 echo "az webapp deploy --resource-group $RESOURCE_GROUP --name $APP_NAME --src-path website.zip"
 
 az webapp deploy --resource-group $RESOURCE_GROUP --name $APP_NAME --src-path website.zip
+
+# Clean up the zip file
+echo "Cleaning up..."
+rm website.zip
+
+echo "Deployment complete."
