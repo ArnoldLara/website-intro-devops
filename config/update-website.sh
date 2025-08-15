@@ -1,17 +1,24 @@
 #!/bin/bash
+# This script deploys the website files to an Azure App Service.
+# Author: Arnold Lara
+# Date: 2025-08-15
+# Usage: ./update-website.sh
 
-# APP_NAME=${1:-"prod-website-devops"}
-# RESOURCE_GROUP=${2:-"prod-website-devops-rg"}
+# Load app details from the terraform output file
+APP_NAME=$(cat ../terraform/app_details.txt | grep app_name | awk -F= '{print $2}')
+RESOURCE_GROUP=$(cat ../terraform/app_details.txt | grep group_name | awk -F= '{print $2}')
 
-APP_NAME=$1
-RESOURCE_GROUP=$2
+# Print the loaded values for verification
+echo "Using App Name: $APP_NAME"
+echo "Using Resource Group: $RESOURCE_GROUP"
 
+# Check if the variables were loaded correctly
 if [ -z "$APP_NAME" ] || [ -z "$RESOURCE_GROUP" ]; then
-  echo "You must provide the app name and resource group."
-  echo "Usage: $0 <app-name> <resource-group>"
+  echo "ERROR: App name or Resource group is not set. Please ensure terraform has been applied and the app_details.txt file exists."
   exit 1
 fi
 
+# Navigate to the project directory
 cd ..
 
 # Zip the website files
